@@ -46,6 +46,19 @@ server.delete('/users/:id', (req, res) =>{
     })
 })
 
+server.get('/user/:id', (req, res) =>{
+    const id = req.params.id;
+
+    db.findById(id)
+    .then(user =>{
+        if(user){
+            res.status(200).json(user);
+        }else{
+            res.status(404).json({message:"cant find user"})
+        }
+    })
+});
+
 server.put('/users/:id', (req, res) =>{
     const id = req.params.id;
     const data = req.body;
