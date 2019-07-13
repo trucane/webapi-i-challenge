@@ -24,12 +24,27 @@ server.post('/users', (req, res) =>{
     const data = req.body;
     db.insert(data)
     .then(user =>{
-        res.status(204).json(user)
+        res.status(201).json(user)
     })
     .catch(err =>{
         res.status(500).json(err)
     })
 });
+
+server.delete('/users/:id', (req, res) =>{
+    const id = req.params.id;
+    db.remove(id)
+    .then(item =>{
+        if(item){
+            res.status(204).end()
+        }else{
+            res.status(404).json({message: "cant find the item to delete"})
+        }
+    })
+    .catch(err =>{
+        res.status(500).json(err)
+    })
+})
 
 const port = 5000;
 
