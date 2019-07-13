@@ -46,6 +46,22 @@ server.delete('/users/:id', (req, res) =>{
     })
 })
 
+server.put('/users/:id', (req, res) =>{
+    const id = req.params.id;
+    const data = req.body;
+    db.update(id, data)
+    .then(updated =>{
+        if(updated){
+            res.status(200).json(updated);
+        }else{
+            res.status(404).json({message:"cant find user to update"})
+        }
+    })
+    .catch(err =>{
+        res.status(500).json(err)
+    })
+});
+
 const port = 5000;
 
 server.listen(port, () => console.log('Yes I am on port 5000') );
